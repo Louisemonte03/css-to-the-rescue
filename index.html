@@ -3,64 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The WaddleDuck</title>
+    <title>The WaddleDuck - Flight Mode</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <input type="checkbox" id="silly" />
+    <label for="silly">Silly Walk!</label>
+
     <main>
-      <!-- THE DUCK -->
       <section>
-        <!-- HEAD -->
         <div>
           <span></span>
-          <!-- EYE -->
           <button></button>
-          <!-- BEAK -->
         </div>
-        <!-- BODY -->
         <div>
-          <!-- WING -->
           <article></article>
-          <!-- TAIL -->
           <aside></aside>
         </div>
-        <!-- LEGS -->
-        <div>
+        <div class="normal-legs">
           <ul>
             <li></li>
-            <!-- UPPERLEG -->
             <li></li>
-            <!-- LOWERLEG -->
             <li></li>
-            <!-- FEET -->
           </ul>
           <ul>
             <li></li>
-            <!-- UPPERLEG -->
             <li></li>
-            <!-- LOWERLEG -->
             <li></li>
-            <!-- FEET -->
           </ul>
         </div>
-        <!-- SPEEDING LEGS -->
-        <div>
-          <ul>
-            <li></li>
-            <!-- UPPERLEG -->
-            <li></li>
-            <!-- LOWERLEG -->
-            <li></li>
-            <!-- FEET -->
-          </ul>
-          <ul>
-            <li></li>
-            <!-- UPPERLEG -->
-            <li></li>
-            <!-- LOWERLEG -->
-            <li></li>
-            <!-- FEET -->
-          </ul>
+
+        <div class="ring-overlay">
+          <div class="scene">
+            <div class="ring-container">
+              <div class="ring-core"></div>
+              <div class="ring-glow"></div>
+            </div>
+          </div>
         </div>
       </section>
     </main>

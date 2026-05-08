@@ -1,251 +1,305 @@
 /* ============================================================
-   CSS To the rescue
-   Auteur: Louise
+   1. ARCHITECTUUR
    ============================================================ */
+@layer theme, base, duck, interaction, animations;
 
-/* ============================================================
-   1. VARIABELEN & THEMA
-   ============================================================ */
-
-:root {
-  --duck-color-body: #ffb800;
-  --duck-color-body-dark: #ff9c00;
-  --duck-color-body-light: #ffd894;
-  --duck-color-beak: #ff5400;
-  --duck-color-feet: #c94200;
-  --duck-color-feet-light: #f49261;
-  --duck-color-eyes: #403644;
-  --color-white: #ffffff;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer theme {
   :root {
-    --duck-color-body: #e6a200;
-    --duck-color-body-dark: #c47800;
-    --duck-color-body-light: #f5c84a;
-    --duck-color-beak: #e04800;
-    --duck-color-feet: #a33500;
-    --duck-color-feet-light: #d4623a;
-    --duck-color-eyes: #484848;
+    --duck-color-body: #ffb800;
+    --duck-color-body-dark: #ff9c00;
+    --duck-color-body-light: #ffd894;
+    --duck-color-beak: #ff5400;
+    --duck-color-feet: #c94200;
+    --duck-color-feet-dark: #8b2e00;
+    --duck-color-feet-light: #f49261;
+    --duck-color-eyes: #403644;
+    --color-white: #ffffff;
   }
 }
 
-/* ============================================================
-   2. GENERAL
-   ============================================================ */
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  height: 100vh;
-}
-
-main {
-  width: 100%;
-  height: 100vh;
-  position: relative;
-}
-
-/* ============================================================
-   3. THE DUCK
-   ============================================================ */
-
-/* POSITIONING DUCK */
-main section {
-  position: absolute;
-  z-index: 10;
-  top: 200px;
-  left: 350px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-/* HEAD */
-main section > div:nth-of-type(1) {
-  background-color: var(--duck-color-body);
-  height: 100px;
-  width: 110px;
-  border-radius: 5px;
-  position: relative;
-  box-shadow: inset 0 -10px 0 var(--duck-color-body-dark);
-  animation: hop-body 1.2s ease-in-out infinite;
-}
-
-/* EYE */
-main section > div:nth-of-type(1) span {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 30px;
-  height: 25px;
-  background: var(--color-white);
-  border-radius: 50%;
-}
-
-/* PUPIL */
-main section > div:nth-of-type(1) span::after {
-  content: "";
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background-color: var(--duck-color-eyes);
-  border-radius: 100%;
-  top: 50%;
-  left: 60%;
-  transform: translate(-50%, -50%);
-}
-
-/* BEAK */
-main section > div:nth-of-type(1) button {
-  position: absolute;
-  right: -25px;
-  top: 55px;
-  width: 45px;
-  height: 12px;
-  border: none;
-  background-color: var(--duck-color-beak);
-  border-radius: 2px 5px 5px 2px;
-}
-
-/* BODY */
-main section > div:nth-of-type(2) {
-  background-color: var(--duck-color-body);
-  height: 130px;
-  width: 230px;
-  border-radius: 0px 0px 40px 10px;
-  position: relative;
-  box-shadow: inset 0 -10px 0 var(--duck-color-body-dark);
-  animation: hop-body 1.25s ease-in-out infinite;
-}
-
-/* WING */
-main section > div:nth-of-type(2) article {
-  position: absolute;
-  width: 100px;
-  height: 50px;
-  background-color: var(--duck-color-body-light);
-  border-radius: 0 0 50px 50px;
-  top: 30px;
-  left: 50px;
-  animation: wing-flap 0.9s steps(5) infinite;
-}
-
-/* TAIL */
-main section > div:nth-of-type(2) aside {
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  background-color: var(--duck-color-body);
-  left: -15px;
-  border-radius: 5px;
-  top: 0;
-  clip-path: polygon(100% 0, 0 0, 100% 100%);
-}
-
-/* LEGS */
-main section > div:nth-of-type(3) {
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  padding-right: 20px;
-}
-
-main section > div:nth-of-type(3) ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform-origin: top center;
-}
-
-main section > div:nth-of-type(3) ul:nth-of-type(1) {
-  animation: leg-front 0.5s ease-in-out infinite;
-}
-
-main section > div:nth-of-type(3) ul:nth-of-type(2) {
-  animation: leg-front 0.5s ease-in-out infinite 0.25s;
-}
-
-main section div:nth-of-type(3) li {
-  width: 8px;
-  height: 30px;
-  margin-bottom: 5px;
-}
-
-/* UPPERLEG */
-main section div:nth-of-type(3) li:nth-of-type(1) {
-  background-color: var(--duck-color-feet);
-}
-
-/* LOWERLEG */
-main section div:nth-of-type(3) li:nth-of-type(2) {
-  background-color: var(--duck-color-feet-light);
-}
-
-/* FEET */
-main section div:nth-of-type(3) li:nth-of-type(3) {
-  background-color: var(--duck-color-feet);
-  width: 30px;
-  height: 8px;
-  border-radius: 0 5px 5px 0;
-  margin-left: 20px;
-}
-
-/* ============================================================
-   4. ANIMATIES
-   ============================================================ */
-
-@keyframes hop-body {
-  0% {
-    margin-top: 0px;
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-  25% {
-    margin-top: -18px;
+  body {
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    font-family: sans-serif;
   }
-  50% {
-    margin-top: 0px;
+  main {
+    width: 100%;
+    height: 100vh;
+    position: relative;
   }
-  75% {
-    margin-top: -12px;
-  }
-  100% {
-    margin-top: 0px;
+  #silly {
+    display: none;
   }
 }
 
-@keyframes wing-flap {
-  0% {
-    transform: rotate(0deg) scaleY(1);
-  }
-  30% {
-    transform: rotate(-15deg) scaleY(0.6);
-  }
-  60% {
-    transform: rotate(8deg) scaleY(1.1);
-  }
-  100% {
-    transform: rotate(0deg) scaleY(1);
+@layer duck {
+  main section {
+    position: absolute;
+    z-index: 10;
+    top: 200px;
+    left: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    /* HEAD */
+    & > div:nth-of-type(1) {
+      background-color: var(--duck-color-body);
+      height: 100px;
+      width: 110px;
+      border-radius: 5px;
+      position: relative;
+      box-shadow: inset 0 -10px 0 var(--duck-color-body-dark);
+      animation: hop-body 1.2s ease-in-out infinite;
+      z-index: 2;
+
+      span {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 25px;
+        background: var(--color-white);
+        border-radius: 50%;
+        &::after {
+          content: "";
+          position: absolute;
+          width: 12px;
+          height: 12px;
+          background-color: var(--duck-color-eyes);
+          border-radius: 100%;
+          top: 50%;
+          left: 60%;
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      button {
+        position: absolute;
+        right: -25px;
+        top: 55px;
+        width: 45px;
+        height: 12px;
+        border: none;
+        background-color: var(--duck-color-beak);
+        border-radius: 2px 5px 5px 2px;
+      }
+    }
+
+    /* BODY */
+    & > div:nth-of-type(2) {
+      background-color: var(--duck-color-body);
+      height: 130px;
+      width: 230px;
+      border-radius: 0px 0px 40px 10px;
+      position: relative;
+      box-shadow: inset 0 -10px 0 var(--duck-color-body-dark);
+      animation: hop-body 1.25s ease-in-out infinite;
+      z-index: 2;
+
+      article {
+        position: absolute;
+        width: 100px;
+        height: 50px;
+        background-color: var(--duck-color-body-light);
+        border-radius: 0 0 50px 50px;
+        top: 30px;
+        left: 50px;
+        animation: wing-flap 0.9s steps(5) infinite;
+      }
+
+      aside {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        background-color: var(--duck-color-body);
+        left: -15px;
+        border-radius: 5px;
+        top: 0;
+        clip-path: polygon(100% 0, 0 0, 100% 100%);
+      }
+    }
+
+    /* NORMALE BENEN */
+    .normal-legs {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      padding-right: 20px;
+      ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform-origin: top center;
+        &:nth-of-type(1) {
+          animation: leg-front 0.5s ease-in-out infinite;
+        }
+        &:nth-of-type(2) {
+          animation: leg-front 0.5s ease-in-out infinite 0.25s;
+        }
+        li {
+          width: 8px;
+          height: 30px;
+          margin-bottom: 5px;
+          &:nth-of-type(1) {
+            background-color: var(--duck-color-feet);
+          }
+          &:nth-of-type(2) {
+            background-color: var(--duck-color-feet-light);
+          }
+          &:nth-of-type(3) {
+            background-color: var(--duck-color-feet);
+            width: 30px;
+            height: 8px;
+            border-radius: 0 5px 5px 0;
+            margin-left: 20px;
+          }
+        }
+      }
+    }
+
+    /* 3D RING STYLING */
+    .ring-overlay {
+      display: none;
+      position: absolute;
+      bottom: -160px; /* Lager gezet voor betere flow */
+      left: 15px;
+      z-index: 1;
+    }
+
+    .scene {
+      perspective: 1500px;
+    }
+
+    .ring-container {
+      width: 180px;
+      height: 180px;
+      /* EXTRA KANTELING: naar 85deg voor een platter effect */
+      transform: rotateX(65deg) rotateY(-15deg) rotateZ(-10deg) scale(1.3);
+      transform-style: preserve-3d;
+    }
+
+    .ring-core,
+    .ring-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+
+      /* Vurige ring gebaseerd op de pootjes-kleuren */
+      background: conic-gradient(
+        from 180deg,
+        var(--duck-color-feet-light) 0deg,
+        /* Licht oranje */ var(--duck-color-feet) 120deg,
+        /* Midden oranje */ var(--duck-color-feet-dark) 240deg,
+        /* Donker bruin/oranje */ var(--duck-color-feet-light) 360deg
+          /* Terug naar licht */
+      );
+
+      -webkit-mask: radial-gradient(transparent 58%, black 59%);
+      mask: radial-gradient(transparent 58%, black 59%);
+      animation: colorSpin 0.4s linear infinite;
+    }
+
+    .ring-glow {
+      filter: blur(12px);
+      /* Iets hogere opacity voor een warme gloed onder de eend */
+      opacity: 0.8;
+    }
   }
 }
 
-@keyframes leg-front {
-  0% {
-    transform: rotate(0deg);
+@layer interaction {
+  label[for="silly"] {
+    display: inline-block;
+    margin: 20px;
+    padding: 12px 25px;
+    background: var(--duck-color-beak);
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--duck-color-feet-dark);
+    position: relative;
+    z-index: 100;
   }
-  25% {
-    transform: rotate(-30deg);
+
+  #silly:checked ~ main section {
+    /* LICHAAM VERTRAGING: We overschrijven de snelheid hier naar een normaal tempo */
+    & > div:nth-of-type(1),
+    & > div:nth-of-type(2) {
+      animation-duration: 0.8s; /* Veel rustiger dan de 0.15s die je had */
+    }
+
+    .normal-legs {
+      display: none;
+    }
+    .ring-overlay {
+      display: block;
+      /* Een zachte zweef-animatie in plaats van die harde vibratie */
+      animation: hover-float 2s ease-in-out infinite;
+    }
   }
-  50% {
-    transform: rotate(0deg);
+}
+
+@layer animations {
+  @keyframes colorSpin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
-  75% {
-    transform: rotate(25deg);
+  /* Nieuwe zweef-animatie voor een vloeiend effect */
+  @keyframes hover-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
   }
-  100% {
-    transform: rotate(0deg);
+  @keyframes hop-body {
+    0%,
+    50%,
+    100% {
+      margin-top: 0px;
+    }
+    25% {
+      margin-top: -15px;
+    }
+    75% {
+      margin-top: -10px;
+    }
+  }
+  @keyframes wing-flap {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(-15deg);
+    }
+  }
+  @keyframes leg-front {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-30deg);
+    }
+    75% {
+      transform: rotate(25deg);
+    }
   }
 }
