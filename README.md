@@ -21,24 +21,22 @@ I’ve already added the colors I want to use for the duck and the background th
 ![moodmoard](/images/readme/moodboard-visual.png)
 
 - **Hoe lang duurde het ?** The whole day
-- **Wat heb ik geleerd?** ///
 - **Wat ga ik morgen doen**
+  Tomorrow I’ll start deciding which CSS elements I’m going to use in the code.
 
-Tomorrow I’ll start deciding which CSS elements I’m going to use in the code.
-Code elements I’ll use
-
+Code elements I’ll use:
 HTML
-A div or canvas for the play area
-A div for the duck (or multiple divs for body, head, beak, tail)
-Optional span elements for details
+
+- A div or canvas for the play area
+- A div for the duck
 
 CSS
-position: absolute on the duck so it can move
-border-radius for round shapes (body, head)
-transform for rotation (beak, tail)
-transition for smooth movement
-Pseudo-elements ::before and ::after for extra shapes without extra HTML
-animation + @keyframes for a waddle animation with slight rotation and animation delay
+
+- position: absolute on the duck so it can move
+- border-radius for round shapes like body and head
+- transform for rotation beak, tail
+- transition for smooth movement
+  animation + @keyframes for a waddle animation
 
 ## **Dag 2 dinsdag**
 
@@ -46,12 +44,14 @@ animation + @keyframes for a waddle animation with slight rotation and animation
 
 I started working on creating the duck and the two themed backgrounds.
 
-The duck →
-The duck for me was a little difficult. I want to ask Sanne or Nils for help on this one
-![the duck i now got](/images/readme/the-duck.png)
+The duck →-
+
+- The duck for me was a little difficult. I want to ask Sanne or Nils for help on this one
+  ![the duck i now got](/images/readme/the-duck.png)
 
 The background themes →
-For the background themes, I worked on making a scene with clouds, bushes, and water. At first the clouds didn’t work properly, because when the screen became smaller everything shifted. I eventually fixed this by using percentages instead of fixed values.
+
+- For the background themes, I worked on making a scene with clouds, bushes, and water. At first the clouds didn’t work properly, because when the screen became smaller everything shifted. I eventually fixed this by using percentages instead of fixed values.
 
 I used radio buttons together with display: none and display: block so that when you select the “in water” option, the water background appears.
 
@@ -68,15 +68,14 @@ I implemented this with radio buttons. It’s the same technique I learned in Br
 
 - **Wat heb ik gedaan?**
 
-This week I focused on building the duck entirely out of CSS and HTML no SVGs or images. The duck is made up of basic HTML elements: div for the head and body, span for the eye, button for the beak, article for the wing, aside for the tail connector, and ul li for the legs and feet.
+This week I focused on building the duck entirely out of css and htmm. The duck is made up of basic html elements div for the head and body, span for the eye, button for the beak, article for the wing, aside for the tail connector, and ul li for the legs and feet.
 
-I added css animations for the walking motion. The legs swing back and forth using keyframes legwing with transform: rotate(). The body has a gentle bounce with keyframes hop body. The wing flaps using steps() to give it a more cartoon movement.
+I added css animations for the walking motion. The legs swing back and forth using keyframes legwing with transform: rotate. The body has a gentle bounce with keyframes hop body. The wing flaps using steps to give it a more cartoon movement.
 
-I also structured the CSS using layer theme, base, duck, interaction, animation so everything stays organized and easy to adjust.
+I also structured the css using layer theme, base, duck, interaction, animation so everything stays organized and easy to adjust.
 
 - **Wat was moeilijk?**
-
-Getting the legs to look right took a lot of trial and error. The transform origin had to be set to top center so the legs swing from the hip rather than the center. Also figuring out the right nth-of-type selectors without using classes was a challenge but also very satisfying once it worked.
+  Getting the legs to look right took a lot of trial and error. The transform origin had to be set to top center so the legs swing from the hip rather than the center. Also figuring out the right nth-of-type selectors without using classes was a challenge but also very satisfying once it worked.
 
 - **Wat heb ik geleerd?**
 
@@ -89,28 +88,26 @@ I learned how to structure CSS with layer and how powerful CSS nesting is for ke
 This week I added the full background scene and the Road Runner interaction. The background has:
 
 - A sky gradient
-- Animated clouds drifting from right to left (cloud-drift keyframe)
+- Animated clouds drifting from right to left
 - A ground with a grass strip on top
-- A CSS tree (made with border-trick for the triangle shape)
+- A CSS tree
 - A water mode with oval ripple animations
 
-For the **Road Runner** mode checkbox toggle, the duck gets a spinning fire ring underneath it — built with conic-gradient and a mask to create the ring shape. In Road Runner mode, everything speeds up: clouds, the tree, and the duck itself runs across the screen using translateX.
+For the Road Runner mode checkbox toggle, the duck gets a spinning fire ring underneath it — built with conic-gradient and a mask to create the ring shape. In Road Runner mode, everything speeds up: clouds, the tree, and the duck itself runs across the screen using translateX.
 
-I added a **water + Road Runner** combo where the duck tilts like a speedboat rotate-20deg and shoots across the screen.
+I added a water and Road Runner combo where the duck tilts like a speedboat rotate-20deg and shoots across the screen.
 
 - **Wat was moeilijk?**
-
-Getting the CSS only interaction to work correctly was the hardest part. Since I can't use JavaScript, everything has to work with :checked sibling selectors. Combining multiple states land/water + silly in one selector was confusing at first. Also understanding why the ~ selector only works in a specific DOM order took some time.
+  Getting the CSS only interaction to work correctly was the hardest part. Since I can't use javascript, everything has to work with :checked sibling selectors. Combining multiple states land/water + silly in one selector was confusing at first. Also understanding why the selector only works in a specific dom order took some time.
 
 - **Wat heb ik geleerd?**
-
-I learned a lot about CSS animations and how animation duration can be overridden in a more specific selector to speed things up. I also learned how conic-gradient and mask work together to create a ring shape. And I deepened my understanding of the CSS cascade and how layer controls priority.
+  I learned a lot about css animations and how animation duration can be overridden in a more specific selector to speed things up. I also learned how conic-gradient and mask work together to create a ring shape. And I deepened my understanding of the CSS cascade and how layer controls priority.
 
 ## Week 4 — Afronding & refactoring
 
 - **Wat heb ik gedaan?**
 
-In the final week I did a big refactor: I removed all classes from the HTML and CSS. The assignment says to work without classes except one if strictly necessary, so I replaced everything with structural selectors like main > div:nth-of-type4 for the ground, section > div:nth-of-type3` for the legs, etc.
+In the final week I did a big refactor: I removed all classes from the html and css. The assignment says to work without classes except one if strictly necessary, so I replaced everything with structural selectors.
 
 I also cleaned up the CSS and made sure all interactions still worked correctly after the refactor.
 
@@ -146,3 +143,7 @@ I'd like to explore CSS container queries and property for animating custom prop
 - [MDN — :nth-of-type()](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-of-type)
 - [MDN — transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
 - [MDN — clip-path](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
+
+### AI
+
+- Claude (Anthropic) — gebruikt om code op te schonen en te structureren
