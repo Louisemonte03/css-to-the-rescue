@@ -1,19 +1,30 @@
 /* ============================================================
-   1. ARCHITECTUUR
+   ARCHITECTUUR
    ============================================================ */
-@layer theme, base, duck, interaction, animations;
+@layer theme, base, background, duck, ui, interaction, animations, responsive;
 
 @layer theme {
   :root {
-    --duck-color-body: #ffb800;
-    --duck-color-body-dark: #ff9c00;
-    --duck-color-body-light: #ffd894;
-    --duck-color-beak: #ff5400;
-    --duck-color-feet: #c94200;
-    --duck-color-feet-dark: #8b2e00;
-    --duck-color-feet-light: #f49261;
-    --duck-color-eyes: #403644;
-    --color-white: #ffffff;
+    --duck-body: #ffb800;
+    --duck-body-dark: #ff9c00;
+    --duck-body-light: #ffd894;
+    --duck-beak: #ff5400;
+    --duck-feet: #c94200;
+    --duck-feet-dark: #8b2e00;
+    --duck-feet-light: #f49261;
+    --duck-eyes: #403644;
+    --white: #ffffff;
+
+    --grass-color: #4db35a;
+    --dirt-color: #a07248;
+    --water-top: #2196f3;
+    --water-bot: #1565c0;
+    --tree-green: #2d7d32;
+    --tree-brown: #5d4037;
+
+    --sky-top: #5ab8e8;
+    --sky-mid: #a8d8f0;
+    --sky-bot: #c5e8f7;
   }
 }
 
@@ -23,19 +34,217 @@
     padding: 0;
     box-sizing: border-box;
   }
+
   body {
     height: 100vh;
     overflow: hidden;
-    background-color: #f0f0f0;
-    font-family: sans-serif;
+    font-family: "Nunito", Arial, sans-serif;
   }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    display: none;
+  }
+
   main {
     width: 100%;
     height: 100vh;
     position: relative;
+    background: linear-gradient(
+      to bottom,
+      var(--sky-top) 0%,
+      var(--sky-mid) 55%,
+      var(--sky-bot) 100%
+    );
   }
-  #silly {
+}
+
+@layer background {
+  /* wolken */
+  main > div:is(:nth-of-type(1), :nth-of-type(2), :nth-of-type(3)) {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    z-index: 2;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.07));
+    animation: cloud-drift linear infinite;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+    }
+  }
+
+  /* wolkk 1 */
+  main > div:nth-of-type(1) {
+    width: 160px;
+    height: 50px;
+    top: 8vh;
+    animation-duration: 38s;
+    animation-delay: -14s;
+
+    &::before {
+      width: 70px;
+      height: 65px;
+      top: -35px;
+      left: 25px;
+    }
+    &::after {
+      width: 55px;
+      height: 50px;
+      top: -25px;
+      left: 88px;
+    }
+  }
+
+  /* wolk 2 */
+  main > div:nth-of-type(2) {
+    width: 220px;
+    height: 60px;
+    top: 14vh;
+    animation-duration: 58s;
+    animation-delay: -32s;
+
+    &::before {
+      width: 95px;
+      height: 85px;
+      top: -45px;
+      left: 38px;
+    }
+    &::after {
+      width: 70px;
+      height: 65px;
+      top: -32px;
+      left: 118px;
+    }
+  }
+
+  /* wolk 3 */
+  main > div:nth-of-type(3) {
+    width: 120px;
+    height: 40px;
+    top: 5vh;
+    animation-duration: 48s;
+    animation-delay: -6s;
+
+    &::before {
+      width: 55px;
+      height: 50px;
+      top: -28px;
+      left: 18px;
+    }
+    &::after {
+      width: 45px;
+      height: 42px;
+      top: -20px;
+      left: 62px;
+    }
+  }
+
+  /* === grond === */
+  main > div:nth-of-type(4) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 38vh;
+    background: var(--dirt-color);
+    z-index: 3;
+
+    /* gras */
+    & > div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: var(--grass-color);
+    }
+  }
+
+  /* === boom === */
+  main > div:nth-of-type(5) {
+    position: absolute;
+    bottom: 38vh;
+    left: 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: tree-drift 30s linear -9s infinite;
+
+    /* bladeren */
+    & > div:nth-of-type(1) {
+      width: 0;
+      height: 0;
+      border-left: 55px solid transparent;
+      border-right: 55px solid transparent;
+      border-bottom: 150px solid var(--tree-green);
+    }
+
+    /* boomstam */
+    & > div:nth-of-type(2) {
+      width: 20px;
+      height: 45px;
+      background: var(--tree-brown);
+    }
+  }
+
+  /* === water === */
+  main > div:nth-of-type(6) {
     display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 38vh;
+    background: linear-gradient(
+      to bottom,
+      var(--water-top) 0%,
+      var(--water-bot) 100%
+    );
+    z-index: 3;
+    overflow: hidden;
+
+    /* water kringen */
+    & > div {
+      position: absolute;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-radius: 50%;
+      animation: ripple-pulse 3.5s ease-in-out infinite;
+    }
+
+    & > div:nth-of-type(1) {
+      width: 130px;
+      height: 38px;
+      top: 8%;
+      left: 5%;
+      animation-delay: 0s;
+    }
+    & > div:nth-of-type(2) {
+      width: 180px;
+      height: 50px;
+      top: 28%;
+      left: 38%;
+      animation-delay: 1.2s;
+    }
+    & > div:nth-of-type(3) {
+      width: 240px;
+      height: 60px;
+      top: 55%;
+      left: 58%;
+      animation-delay: 2.4s;
+    }
+    & > div:nth-of-type(4) {
+      width: 100px;
+      height: 28px;
+      top: 12%;
+      left: 78%;
+      animation-delay: 0.8s;
+    }
   }
 }
 
@@ -43,20 +252,20 @@
   main section {
     position: absolute;
     z-index: 10;
-    top: 200px;
-    left: 350px;
+    bottom: 170px;
+    left: 150px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 
-    /* HEAD */
+    /* kop */
     & > div:nth-of-type(1) {
-      background-color: var(--duck-color-body);
+      background-color: var(--duck-body);
       height: 100px;
       width: 110px;
       border-radius: 5px;
       position: relative;
-      box-shadow: inset 0 -10px 0 var(--duck-color-body-dark);
+      box-shadow: inset 0 -10px 0 var(--duck-body-dark);
       animation: hop-body 1.2s ease-in-out infinite;
       z-index: 2;
 
@@ -66,14 +275,15 @@
         right: 20px;
         width: 30px;
         height: 25px;
-        background: var(--color-white);
+        background: var(--white);
         border-radius: 50%;
+
         &::after {
           content: "";
           position: absolute;
           width: 12px;
           height: 12px;
-          background-color: var(--duck-color-eyes);
+          background-color: var(--duck-eyes);
           border-radius: 100%;
           top: 50%;
           left: 60%;
@@ -88,19 +298,19 @@
         width: 45px;
         height: 12px;
         border: none;
-        background-color: var(--duck-color-beak);
+        background-color: var(--duck-beak);
         border-radius: 2px 5px 5px 2px;
       }
     }
 
-    /* BODY */
+    /* lichaam: */
     & > div:nth-of-type(2) {
-      background-color: var(--duck-color-body);
+      background-color: var(--duck-body);
       height: 130px;
       width: 230px;
       border-radius: 0px 0px 40px 10px;
       position: relative;
-      box-shadow: inset 0 -10px 0 var(--duck-color-body-dark);
+      box-shadow: inset 0 -10px 0 var(--duck-body-dark);
       animation: hop-body 1.25s ease-in-out infinite;
       z-index: 2;
 
@@ -108,7 +318,7 @@
         position: absolute;
         width: 100px;
         height: 50px;
-        background-color: var(--duck-color-body-light);
+        background-color: var(--duck-body-light);
         border-radius: 0 0 50px 50px;
         top: 30px;
         left: 50px;
@@ -119,7 +329,7 @@
         position: absolute;
         width: 25px;
         height: 25px;
-        background-color: var(--duck-color-body);
+        background-color: var(--duck-body);
         left: -15px;
         border-radius: 5px;
         top: 0;
@@ -127,36 +337,40 @@
       }
     }
 
-    /* NORMALE BENEN */
-    .normal-legs {
+    /* benen: */
+    & > div:nth-of-type(3) {
       width: 100%;
       display: flex;
       justify-content: space-evenly;
       padding-right: 20px;
+
       ul {
         list-style: none;
         display: flex;
         flex-direction: column;
         align-items: center;
         transform-origin: top center;
+
         &:nth-of-type(1) {
-          animation: leg-front 0.5s ease-in-out infinite;
+          animation: leg-swing 0.5s ease-in-out infinite;
         }
         &:nth-of-type(2) {
-          animation: leg-front 0.5s ease-in-out infinite 0.25s;
+          animation: leg-swing 0.5s ease-in-out infinite 0.25s;
         }
+
         li {
           width: 8px;
           height: 30px;
           margin-bottom: 5px;
+
           &:nth-of-type(1) {
-            background-color: var(--duck-color-feet);
+            background-color: var(--duck-feet);
           }
           &:nth-of-type(2) {
-            background-color: var(--duck-color-feet-light);
+            background-color: var(--duck-feet-light);
           }
           &:nth-of-type(3) {
-            background-color: var(--duck-color-feet);
+            background-color: var(--duck-feet);
             width: 30px;
             height: 8px;
             border-radius: 0 5px 5px 0;
@@ -166,91 +380,419 @@
       }
     }
 
-    /* 3D RING STYLING */
-    .ring-overlay {
+    /* road runner ring:*/
+    & > div:nth-of-type(4) {
       display: none;
       position: absolute;
-      bottom: -160px; /* Lager gezet voor betere flow */
+      bottom: -160px;
       left: 15px;
       z-index: 1;
+
+      & > div {
+        perspective: 1500px;
+
+        /* ring container */
+        & > div {
+          width: 180px;
+          height: 180px;
+          transform: rotateX(65deg) rotateY(-15deg) rotateZ(-10deg) scale(1.3);
+          transform-style: preserve-3d;
+
+          /* ring-core + ring-glow */
+          & > div {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(
+              from 180deg,
+              var(--duck-feet-light) 0deg,
+              var(--duck-feet) 120deg,
+              var(--duck-feet-dark) 240deg,
+              var(--duck-feet-light) 360deg
+            );
+            -webkit-mask: radial-gradient(transparent 58%, black 59%);
+            mask: radial-gradient(transparent 58%, black 59%);
+            animation: color-spin 0.4s linear infinite;
+          }
+
+          /* ring-glow */
+          & > div:nth-of-type(2) {
+            filter: blur(12px);
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+}
+
+@layer ui {
+  /* body */
+  body > div {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 28px 50px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    white-space: nowrap;
+
+    h1 {
+      font-family: "Bangers", cursive;
+      font-size: 3.8rem;
+      font-weight: 400;
+      font-style: normal;
+      letter-spacing: 0.18em;
+      color: white;
+      text-shadow:
+        3px 3px 0 rgba(0, 80, 160, 0.35),
+        0 5px 20px rgba(0, 50, 120, 0.25);
     }
 
-    .scene {
-      perspective: 1500px;
+    /* mode toggle */
+    & > div {
+      display: flex;
+      background: rgba(255, 255, 255, 0.45);
+      border-radius: 50px;
+      padding: 5px;
+
+      label {
+        padding: 9px 26px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: rgba(50, 80, 130, 0.7);
+        transition:
+          background 0.2s,
+          color 0.2s;
+        user-select: none;
+      }
     }
 
-    .ring-container {
-      width: 180px;
-      height: 180px;
-      /* EXTRA KANTELING: naar 85deg voor een platter effect */
-      transform: rotateX(65deg) rotateY(-15deg) rotateZ(-10deg) scale(1.3);
-      transform-style: preserve-3d;
-    }
+    /* road runner knop */
+    & > label {
+      display: inline-block;
+      padding: 14px 42px;
+      background: #e53e3e;
+      color: white;
+      font-weight: 900;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #9b1c1c;
+      transition:
+        transform 0.08s,
+        box-shadow 0.08s,
+        background 0.2s;
+      user-select: none;
 
-    .ring-core,
-    .ring-glow {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-
-      /* Vurige ring gebaseerd op de pootjes-kleuren */
-      background: conic-gradient(
-        from 180deg,
-        var(--duck-color-feet-light) 0deg,
-        /* Licht oranje */ var(--duck-color-feet) 120deg,
-        /* Midden oranje */ var(--duck-color-feet-dark) 240deg,
-        /* Donker bruin/oranje */ var(--duck-color-feet-light) 360deg
-          /* Terug naar licht */
-      );
-
-      -webkit-mask: radial-gradient(transparent 58%, black 59%);
-      mask: radial-gradient(transparent 58%, black 59%);
-      animation: colorSpin 0.4s linear infinite;
-    }
-
-    .ring-glow {
-      filter: blur(12px);
-      /* Iets hogere opacity voor een warme gloed onder de eend */
-      opacity: 0.8;
+      &:active {
+        transform: translateY(3px);
+        box-shadow: 0 2px 0 #9b1c1c;
+      }
     }
   }
 }
 
 @layer interaction {
-  label[for="silly"] {
-    display: inline-block;
-    margin: 20px;
-    padding: 12px 25px;
-    background: var(--duck-color-beak);
-    color: white;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 0 var(--duck-color-feet-dark);
-    position: relative;
-    z-index: 100;
+  /* Toggle in actieve */
+  #on-land:checked ~ div > div > label[for="on-land"],
+  #in-water:checked ~ div > div > label[for="in-water"] {
+    background: white;
+    color: #1a5da6;
   }
 
+  #silly:checked ~ div > label[for="silly"] {
+    background: #9b1c1c;
+    box-shadow: 0 5px 0 #6b0000;
+  }
+
+  /* Water */
+  #in-water:checked ~ main {
+    --sky-top: #0d3b6e;
+    --sky-mid: #1a5f9e;
+    --sky-bot: #4a9fc4;
+
+    & > div:nth-of-type(4) {
+      display: none;
+    } /* grond */
+    & > div:nth-of-type(5) {
+      display: none;
+    } /* boom */
+    & > div:nth-of-type(6) {
+      display: block;
+    } /* water */
+
+    section {
+      bottom: 170px;
+
+      & > div:nth-of-type(3) {
+        display: none;
+      } /* benen */
+      & > div:nth-of-type(1) {
+        animation: water-bob 2.5s ease-in-out infinite;
+      }
+      & > div:nth-of-type(2) {
+        animation: water-bob 2.5s ease-in-out infinite 0.15s;
+      }
+    }
+  }
+
+  /* de silly walk */
   #silly:checked ~ main section {
-    /* LICHAAM VERTRAGING: We overschrijven de snelheid hier naar een normaal tempo */
-    & > div:nth-of-type(1),
+    animation: duck-run 3s linear infinite;
+
+    & > div:nth-of-type(3) {
+      display: none;
+    } /* benen */
+    & > div:nth-of-type(4) {
+      display: block;
+    } /* ring */
+
+    & > div:nth-of-type(1) {
+      animation: hop-body 0.2s ease-in-out infinite;
+    }
     & > div:nth-of-type(2) {
-      animation-duration: 0.8s; /* Veel rustiger dan de 0.15s die je had */
+      animation: hop-body 0.4s ease-in-out infinite;
+    }
+  }
+
+  /* Speedboot effect */
+  #in-water:checked ~ #silly:checked ~ main section {
+    bottom: calc(170px + 20px);
+    animation: speedboat-run 2.5s linear infinite;
+
+    & > div:nth-of-type(4) {
+      display: none;
+    } /* ring weg */
+  }
+
+  /* Road Runner*/
+  #silly:checked ~ main {
+    & > div:nth-of-type(1) {
+      animation-duration: 6s;
+    } /* wolk 1 */
+    & > div:nth-of-type(2) {
+      animation-duration: 9s;
+    } /* wolk 2 */
+    & > div:nth-of-type(3) {
+      animation-duration: 7s;
+    } /* wolk 3 */
+    & > div:nth-of-type(5) {
+      animation-duration: 3s;
+    } /* boom */
+    & > div:nth-of-type(6) > div {
+      animation-duration: 0.8s;
+    } /* water ripples */
+  }
+
+  /* Night mode via systeem */
+  @media (prefers-color-scheme: dark) {
+    body > div {
+      background: rgba(5, 5, 20, 0.82);
+      border-color: rgba(140, 110, 255, 0.25);
+
+      h1 {
+        color: #ddd0ff;
+        text-shadow:
+          3px 3px 0 rgba(100, 60, 255, 0.5),
+          0 5px 25px rgba(80, 40, 220, 0.45);
+      }
     }
 
-    .normal-legs {
-      display: none;
-    }
-    .ring-overlay {
-      display: block;
-      /* Een zachte zweef-animatie in plaats van die harde vibratie */
-      animation: hover-float 2s ease-in-out infinite;
+    main {
+      --sky-top: #020208;
+      --sky-mid: #0c0a25;
+      --sky-bot: #1a1040;
+      --grass-color: #1e4d26;
+      --dirt-color: #5c3d22;
+      --water-top: #0d3a6e;
+      --water-bot: #071f3e;
+
+      /* sterren */
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background-image:
+          radial-gradient(circle 1.5px at 5% 8%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 13% 15%,
+            rgba(255, 255, 255, 0.7) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 2px at 21% 4%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 30% 18%,
+            rgba(255, 255, 255, 0.8) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 1.5px at 38% 10%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 46% 23%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 2px at 54% 6%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 62% 17%,
+            rgba(255, 255, 255, 0.8) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 1.5px at 70% 3%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 78% 21%,
+            rgba(255, 255, 255, 0.7) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 2px at 86% 9%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 94% 14%,
+            rgba(255, 255, 255, 0.9) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 1.5px at 98% 22%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 2% 32%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 1.5px at 10% 38%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 19% 28%,
+            rgba(255, 255, 255, 0.7) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 2px at 27% 45%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 36% 35%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 1.5px at 44% 50%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 52% 42%,
+            rgba(255, 255, 255, 0.8) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 2px at 60% 30%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 68% 48%,
+            rgba(255, 255, 255, 0.7) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 1.5px at 76% 36%, white 0%, transparent 100%),
+          radial-gradient(
+            circle 1px at 84% 52%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(circle 2px at 92% 40%, white 0%, transparent 100%);
+      }
+
+      /* maan */
+      &::after {
+        content: "";
+        position: absolute;
+        width: 52px;
+        height: 52px;
+        background: radial-gradient(circle, #fffde7 55%, #ffd54f 100%);
+        border-radius: 50%;
+        top: 7vh;
+        right: 12%;
+        box-shadow:
+          0 0 18px rgba(255, 253, 200, 0.9),
+          0 0 60px rgba(255, 253, 200, 0.35);
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      /* nacht-wolken */
+      & > div:is(:nth-of-type(1), :nth-of-type(2), :nth-of-type(3)) {
+        background: rgba(160, 155, 210, 0.1);
+
+        &::before,
+        &::after {
+          background: rgba(160, 155, 210, 0.1);
+        }
+      }
     }
   }
 }
 
 @layer animations {
-  @keyframes colorSpin {
+  @keyframes cloud-drift {
+    from {
+      transform: translateX(110vw);
+    }
+    to {
+      transform: translateX(-350px);
+    }
+  }
+
+  @keyframes tree-drift {
+    from {
+      transform: translateX(110vw);
+    }
+    to {
+      transform: translateX(-30vw);
+    }
+  }
+
+  @keyframes duck-run {
+    from {
+      transform: translateX(-30vw);
+    }
+    to {
+      transform: translateX(110vw);
+    }
+  }
+
+  @keyframes speedboat-run {
+    from {
+      transform: translateX(-30vw) rotate(-20deg);
+    }
+    to {
+      transform: translateX(110vw) rotate(-20deg);
+    }
+  }
+
+  @keyframes ripple-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.35;
+    }
+    50% {
+      transform: scale(1.12);
+      opacity: 0.65;
+    }
+  }
+
+  @keyframes water-bob {
+    0%,
+    100% {
+      margin-top: 0;
+    }
+    50% {
+      margin-top: -8px;
+    }
+  }
+
+  @keyframes color-spin {
     from {
       transform: rotate(0deg);
     }
@@ -258,7 +800,7 @@
       transform: rotate(360deg);
     }
   }
-  /* Nieuwe zweef-animatie voor een vloeiend effect */
+
   @keyframes hover-float {
     0%,
     100% {
@@ -268,11 +810,12 @@
       transform: translateY(-10px);
     }
   }
+
   @keyframes hop-body {
     0%,
     50%,
     100% {
-      margin-top: 0px;
+      margin-top: 0;
     }
     25% {
       margin-top: -15px;
@@ -281,6 +824,7 @@
       margin-top: -10px;
     }
   }
+
   @keyframes wing-flap {
     0%,
     100% {
@@ -290,7 +834,8 @@
       transform: rotate(-15deg);
     }
   }
-  @keyframes leg-front {
+
+  @keyframes leg-swing {
     0%,
     100% {
       transform: rotate(0deg);
@@ -300,6 +845,78 @@
     }
     75% {
       transform: rotate(25deg);
+    }
+  }
+}
+
+@layer responsive {
+  @media (max-width: 900px) {
+    body > div {
+      padding: 18px 28px 22px;
+      gap: 12px;
+
+      h1 {
+        font-size: 2.8rem;
+      }
+
+      & > div label {
+        padding: 7px 16px;
+        font-size: 0.82rem;
+      }
+
+      & > label {
+        padding: 10px 28px;
+        font-size: 0.85rem;
+      }
+    }
+
+    main section {
+      left: 60px;
+      bottom: 130px;
+      transform: scale(0.8);
+      transform-origin: bottom left;
+    }
+  }
+
+  @media (max-width: 600px) {
+    body > div {
+      padding: 14px 18px 18px;
+      gap: 10px;
+      border-radius: 14px;
+
+      h1 {
+        font-size: 2rem;
+        letter-spacing: 0.12em;
+      }
+
+      & > div label {
+        padding: 6px 12px;
+        font-size: 0.78rem;
+      }
+
+      & > label {
+        padding: 8px 22px;
+        font-size: 0.8rem;
+      }
+    }
+
+    main section {
+      left: 20px;
+      bottom: 100px;
+      transform: scale(0.6);
+      transform-origin: bottom left;
+    }
+
+    main > div:nth-of-type(4) {
+      height: 28vh;
+    }
+
+    main > div:nth-of-type(6) {
+      height: 28vh;
+    }
+
+    main > div:nth-of-type(5) {
+      bottom: 28vh;
     }
   }
 }
